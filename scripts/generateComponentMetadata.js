@@ -67,6 +67,16 @@ function getExampleData(examplesPath, componentName) {
     });
 }
 
+function getExampleFiles(examplesPath, componentName) {
+    var exampleFiles = [];
+    try {
+        exampleFiles = getFiles(path.join(examplesPath, componentName));
+    } catch (err) {
+        console.log(chalk.red(`No examples found for ${componentName}`));
+    }
+    return exampleFiles;
+}
+
 function getDirectories(filepath) {
     return fs.readdirSync(filepath).filter(function (file) {
         return fs.statSync(path.join(filepath, file)).isDirectory();
@@ -79,7 +89,7 @@ function getFiles(filepath) {
     });
 }
 
-function writeFile() {
+function writeFile(filepath, content) {
     fs.writeFile(filepath, content, function (err) {
         err ? console.log(chalk.red(err)) : console.log(chalk.green("Component data saved."));
     });
